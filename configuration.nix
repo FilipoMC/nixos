@@ -10,9 +10,7 @@ let
   mypkgs = import ./packages { inherit pkgs lib; };
 in
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
@@ -21,9 +19,16 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  services.displayManager.ly.enable = true;
+  services.displayManager.ly.settings = {
+    allow_empty_password = false;
+    auth_fails = 3;
+    bigclock = "en";
+    vi_mode = true;
+    vi_default_mode = "insert";
+  };
 
-  networking.hostName = "filipo";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.networkmanager.enable = true;
 
@@ -38,7 +43,10 @@ in
 
   users.users.fil = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "input"
+    ];
   };
 
   nix.settings.experimental-features = [
@@ -48,9 +56,6 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.open = false;
   hardware.graphics.enable = true;
   hardware.bluetooth.enable = true;
   hardware.i2c.enable = true;
@@ -78,8 +83,6 @@ in
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   environment.systemPackages = with pkgs; [
@@ -95,6 +98,7 @@ in
     jq
     p7zip
     file
+    killall
 
     nodejs
     pnpm
@@ -127,6 +131,8 @@ in
     pulsemixer
     grimblast
     flameshot
+    mpv
+    numr
 
     cliphist
     hyprsunset
@@ -135,7 +141,6 @@ in
     libnotify
 
     nwg-displays
-    nwg-look
     nwg-bar
     swaynotificationcenter
     pulseaudio
@@ -144,6 +149,7 @@ in
     mint-themes
 
     prismlauncher
+    mangohud
 
     kitty
     mypkgs.yazi
@@ -162,17 +168,15 @@ in
     lazygit
     atuin
     fastfetch
+    hyfetch
     ookla-speedtest
     aria2
     imagemagick
+    ffmpeg
+    yt-dlp
+    jocalsend
 
   ];
-
-  programs.nix-ld.enable = true;
-
-  services.flatpak.enable = true;
-  services.flatpak.update.auto.enable = false;
-  services.flatpak.uninstallUnmanaged = true;
 
   services.flatpak.packages = [
     "org.vinegarhq.Sober"
@@ -180,10 +184,16 @@ in
     "io.github.Soundux"
   ];
 
-  programs.hyprland.enable = true;
-  programs.steam.enable = true;
+  services.flatpak.enable = true;
+  services.flatpak.update.auto.enable = false;
+  services.flatpak.uninstallUnmanaged = true;
 
-  services.displayManager.ly.enable = true;
+  programs.nix-ld.enable = true;
+  programs.steam.enable = true;
+  programs.hyprland.enable = true;
+  programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
+  programs.gpu-screen-recorder.enable = true;
 
   fonts.packages = with pkgs; [
     nerd-fonts.code-new-roman

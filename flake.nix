@@ -7,16 +7,24 @@
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
-  outputs = { self, nixpkgs, zen-browser, nix-flatpak, ... }@inputs: {
-    nixosConfigurations.filipo = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        nix-flatpak.nixosModules.nix-flatpak
+  outputs =
+    {
+      self,
+      nixpkgs,
+      zen-browser,
+      nix-flatpak,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.filipo = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          nix-flatpak.nixosModules.nix-flatpak
 
-        ./configuration.nix
-      ];
+          ./hosts/filipo
+          ./configuration.nix
+        ];
+      };
     };
-  };
 }
-
