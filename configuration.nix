@@ -79,6 +79,13 @@ in
     '';
   };
 
+  services.flatpak.enable = true;
+  services.flatpak.update.auto.enable = false;
+  services.flatpak.uninstallUnmanaged = true;
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
+
   services.vnstat.enable = true;
 
   environment.sessionVariables = {
@@ -161,6 +168,7 @@ in
       withOpenASAR = true;
     })
     spotify
+    proton-vpn-cli
 
     zsh
     eza
@@ -178,22 +186,18 @@ in
 
   ];
 
-  services.flatpak.packages = [
-    "org.vinegarhq.Sober"
-    "com.github.wwmm.easyeffects"
-    "io.github.Soundux"
-  ];
-
-  services.flatpak.enable = true;
-  services.flatpak.update.auto.enable = false;
-  services.flatpak.uninstallUnmanaged = true;
-
   programs.nix-ld.enable = true;
   programs.steam.enable = true;
   programs.hyprland.enable = true;
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
   programs.gpu-screen-recorder.enable = true;
+
+  services.flatpak.packages = [
+    "org.vinegarhq.Sober"
+    "com.github.wwmm.easyeffects"
+    "io.github.Soundux"
+  ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.code-new-roman
