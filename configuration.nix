@@ -77,15 +77,7 @@ in
     ];
   };
 
-  services.interception-tools = {
-    enable = true;
-    udevmonConfig = ''
-      - JOB: "intercept -g $DEVNODE | caps2esc | uinput -d $DEVNODE"
-      DEVICE:
-        EVENTS:
-          EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-    '';
-  };
+  services.interception-tools.enable = true;
 
   services.flatpak.enable = true;
   services.flatpak.update.auto.enable = false;
@@ -131,8 +123,6 @@ in
     ncdu
     dust
     mypkgs.yscan
-
-    interception-tools-plugins.caps2esc
 
     fuzzel
     pyprland
