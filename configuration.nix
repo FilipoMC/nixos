@@ -78,6 +78,21 @@ in
   };
 
   services.interception-tools.enable = true;
+  security.sudo.extraRules = [
+    {
+      users = [ "fil" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/systemctl start interception-tools";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/systemctl stop interception-tools";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   services.flatpak.enable = true;
   services.flatpak.update.auto.enable = false;
