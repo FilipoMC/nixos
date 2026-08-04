@@ -201,7 +201,6 @@ in
 
   programs.nix-ld.enable = true;
   programs.steam.enable = true;
-  programs.hyprland.enable = true;
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
   programs.gpu-screen-recorder.enable = true;
@@ -211,6 +210,16 @@ in
     "com.github.wwmm.easyeffects"
     "io.github.Soundux"
   ];
+
+  programs.hyprland.enable = true;
+  programs.hyprland.withUWSM = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.code-new-roman
@@ -237,6 +246,11 @@ in
       };
     }
   ];
+
+  qt = {
+    enable = true;
+    style = "adwaita-dark";
+  };
 
   system.stateVersion = "26.05";
 }
