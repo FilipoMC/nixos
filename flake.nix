@@ -6,6 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
   outputs =
     {
@@ -13,6 +14,7 @@
       nixpkgs,
       zen-browser,
       nix-flatpak,
+      chaotic,
       ...
     }@inputs:
     {
@@ -21,6 +23,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           nix-flatpak.nixosModules.nix-flatpak
+          chaotic.nixosModules.nyx-cache
 
           ./hosts/filipo
           ./configuration.nix

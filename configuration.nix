@@ -8,6 +8,13 @@
 
 let
   mypkgs = import ./packages { inherit pkgs lib; };
+  chaotic = import inputs.chaotic.inputs.nixpkgs {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+    overlays = [
+      inputs.chaotic.overlays.default
+    ];
+  };
 in
 {
   imports = [ ];
@@ -15,6 +22,7 @@ in
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";
+  boot.loader.grub.gfxmodeEfi = "1024x768";
   boot.loader.timeout = 3;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
@@ -28,7 +36,7 @@ in
     vi_default_mode = "insert";
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = chaotic.linuxPackages_cachyos;
 
   networking.networkmanager.enable = true;
 
