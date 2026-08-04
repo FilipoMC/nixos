@@ -190,7 +190,6 @@ in
     imagemagick
     ffmpeg
     yt-dlp
-    jocalsend
 
   ];
 
