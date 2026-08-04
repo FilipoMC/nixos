@@ -138,6 +138,7 @@ in
     flameshot
     mpv
     numr
+    discover-overlay
 
     cliphist
     hyprsunset
