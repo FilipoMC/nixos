@@ -138,6 +138,7 @@ in
     ncdu
     dust
     mypkgs.yscan
+    distrobox
 
     fuzzel
     pyprland
@@ -203,6 +204,7 @@ in
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
   programs.gpu-screen-recorder.enable = true;
+  virtualisation.podman.enable = true;
 
   services.flatpak.packages = [
     "org.vinegarhq.Sober"
