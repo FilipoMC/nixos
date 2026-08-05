@@ -36,6 +36,8 @@ in
     vi_default_mode = "insert";
   };
 
+  boot.tmp.cleanOnBoot = true;
+
   boot.kernelPackages = chaotic.linuxPackages_cachyos;
 
   networking.networkmanager.enable = true;
