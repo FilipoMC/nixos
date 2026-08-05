@@ -167,7 +167,6 @@ in
     pulseaudio
 
     mint-x-icons
-    mint-themes
 
     prismlauncher
     mangohud
@@ -236,7 +235,7 @@ in
   programs.dconf.profiles.user.databases = [
     {
       settings."org/gnome/desktop/interface" = {
-        gtk-theme = "Mint-Y-Dark";
+        gtk-theme = "Adwaita-dark";
         icon-theme = "Mint-X-Aqua";
         font-name = "FreeSans Regular 11";
         document-font-name = "Noto Sans Medium 11";
