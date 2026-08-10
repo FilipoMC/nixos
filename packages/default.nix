@@ -1,7 +1,11 @@
-{ pkgs, lib }:
+{ pkgs, lib }@args:
 
+let
+  call = path: attrs: import path (args // attrs);
+  callPackage = pkgs.callPackage;
+in
 {
-  yscan = pkgs.callPackage ./yscan { };
-  waybar = import ./waybar.nix { inherit pkgs lib; };
-  yazi = import ./yazi { inherit pkgs lib; };
+  yscan = callPackage ./yscan { };
+  waybar = call ./waybar.nix { };
+  yazi = call ./yazi { };
 }
