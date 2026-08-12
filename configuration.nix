@@ -147,7 +147,6 @@ in
     hyprpaper
     hypridle
     hyprpicker
-    hyprlock
     wl-clipboard
     bluetui
     pulsemixer
@@ -205,6 +204,7 @@ in
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
   programs.gpu-screen-recorder.enable = true;
+  programs.hyprlock.enable = true;
   virtualisation.podman.enable = true;
 
   services.flatpak.packages = [
