@@ -155,6 +155,7 @@ in
     mpv
     numr
     discover-overlay
+    pinta
 
     cliphist
     hyprsunset
@@ -166,6 +167,7 @@ in
     nwg-bar
     swaynotificationcenter
     pulseaudio
+    playerctl
 
     mint-x-icons
 
