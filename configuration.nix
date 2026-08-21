@@ -104,6 +104,8 @@ in
 
   services.vnstat.enable = true;
 
+  services.postgresql.enable = true;
+
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
@@ -140,6 +142,10 @@ in
     dust
     mypkgs.yscan
     distrobox
+    gh
+    pgcli
+    mypkgs.vi-sql
+    mypkgs.resterm
 
     fuzzel
     pyprland
@@ -207,6 +213,7 @@ in
   programs.gamemode.enable = true;
   programs.gpu-screen-recorder.enable = true;
   programs.hyprlock.enable = true;
+  programs.tmux.enable = true;
   virtualisation.podman.enable = true;
 
   services.flatpak.packages = [
