@@ -192,7 +192,6 @@ in
     spotify
     proton-vpn-cli
 
-    zsh
     eza
     zoxide
     lazygit
@@ -207,6 +206,7 @@ in
 
   ];
 
+  programs.zsh.enable = true;
   programs.nix-ld.enable = true;
   programs.steam.enable = true;
   programs.gamescope.enable = true;
