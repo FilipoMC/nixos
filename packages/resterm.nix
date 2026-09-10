@@ -8,7 +8,7 @@
 
 buildGoModule (finalAttrs: {
   pname = "resterm";
-  version = "1.2.1";
+  version = "1.7.2";
 
   src = fetchFromGitHub {
     owner = "unkn0wn-root";

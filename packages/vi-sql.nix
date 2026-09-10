@@ -9,7 +9,7 @@
 
 buildGoModule (finalAttrs: {
   pname = "vi-sql";
-  version = "0.3.0";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "kopecmaciej";
