@@ -54,7 +54,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "wheel"
-      "input"
+      "networkmanager"
     ];
   };
 
@@ -162,6 +162,7 @@ in
     numr
     discover-overlay
     pinta
+    mypkgs.crosshair
 
     cliphist
     hyprsunset

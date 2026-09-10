@@ -9,4 +9,5 @@ in
   waybar = call ./waybar.nix { };
   vi-sql = callPackage ./vi-sql.nix { };
   resterm = callPackage ./resterm.nix { };
+  crosshair = callPackage ./crosshair { };
 }
