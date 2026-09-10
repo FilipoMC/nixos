@@ -160,8 +160,9 @@ in
     flameshot
     mpv
     numr
-    discover-overlay
+    mypkgs.discover-overlay
     pinta
+    polychromatic
     mypkgs.crosshair
 
     cliphist
