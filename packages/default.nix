@@ -7,7 +7,6 @@ in
 {
   yscan = callPackage ./yscan { };
   waybar = call ./waybar.nix { };
-  yazi = call ./yazi { };
   vi-sql = callPackage ./vi-sql.nix { };
   resterm = callPackage ./resterm.nix { };
 }

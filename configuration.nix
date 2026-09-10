@@ -181,7 +181,7 @@ in
     mangohud
 
     kitty
-    mypkgs.yazi
+    yazi
     unar
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
