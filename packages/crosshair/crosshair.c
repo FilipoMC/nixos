@@ -8,7 +8,7 @@
 
 #define RADIUS 3.0
 
-int customRadius = RADIUS;
+double customRadius = RADIUS;
 
 bool is_fullscreen;
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
   if (argc >= 3) {
 
     char *end;
-    int number = strtol(argv[2], &end, 10);
+    double number = strtod(argv[2], &end);
 
     if (*end != '\0') {
       printf("Invalid number\n");
