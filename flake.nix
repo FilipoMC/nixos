@@ -7,6 +7,10 @@
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    helium = {
+      url = "github:AlvaroParker/helium-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -15,6 +19,7 @@
       zen-browser,
       nix-flatpak,
       chaotic,
+      helium,
       ...
     }@inputs:
     {
