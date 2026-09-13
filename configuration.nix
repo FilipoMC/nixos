@@ -8,7 +8,7 @@
 let
   mypkgs = import ./packages { inherit pkgs lib; };
   chaotic = import inputs.chaotic.inputs.nixpkgs {
-    system = pkgs.stdenv.hostPlatform.system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
     overlays = [
       inputs.chaotic.overlays.default
@@ -18,37 +18,82 @@ in
 {
   imports = [ ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.gfxmodeEfi = "1024x768";
-  boot.loader.timeout = 3;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot = {
+    loader = {
 
-  services.displayManager.ly.enable = true;
-  services.displayManager.ly.settings = {
-    allow_empty_password = false;
-    auth_fails = 3;
-    bigclock = "en";
-    vi_mode = true;
-    vi_default_mode = "insert";
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        gfxmodeEfi = "1024x768";
+      };
+      timeout = 3;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+    };
+
+    tmp.cleanOnBoot = true;
+
+    kernelPackages = chaotic.linuxPackages_cachyos;
+
+    kernel.sysctl."kernel.sysrq" = 502;
   };
 
-  boot.tmp.cleanOnBoot = true;
+  services = {
+    displayManager = {
+      ly = {
+        enable = true;
+        settings = {
+          allow_empty_password = false;
+          auth_fails = 3;
+          bigclock = "en";
+          vi_mode = true;
+          vi_default_mode = "insert";
+        };
+      };
+    };
 
-  boot.kernelPackages = chaotic.linuxPackages_cachyos;
+    printing.enable = true;
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+
+    earlyoom = {
+      enable = true;
+      extraArgs = [
+        "-m 5,2"
+        "-s 5,2"
+      ];
+    };
+
+    interception-tools.enable = true;
+
+    flatpak = {
+      enable = true;
+      update.auto.enable = false;
+      uninstallUnmanaged = true;
+
+      packages = [
+        "org.vinegarhq.Sober"
+        "com.github.wwmm.easyeffects"
+        "io.github.Soundux"
+      ];
+    };
+
+    gnome.gnome-keyring.enable = true;
+
+    vnstat.enable = true;
+
+    postgresql.enable = true;
+  };
 
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Warsaw";
-
-  services.printing.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
 
   users.users.fil = {
     isNormalUser = true;
@@ -65,46 +110,31 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
-  hardware.graphics.enable = true;
-  hardware.bluetooth.enable = true;
-  hardware.i2c.enable = true;
+  hardware = {
 
-  boot.kernel.sysctl."kernel.sysrq" = 502;
-  services.earlyoom = {
-    enable = true;
-    extraArgs = [
-      "-m 5,2"
-      "-s 5,2"
-    ];
+    graphics.enable = true;
+    bluetooth.enable = true;
+    i2c.enable = true;
   };
 
-  services.interception-tools.enable = true;
-  security.sudo.extraRules = [
-    {
-      users = [ "fil" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/systemctl start interception-tools";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/systemctl stop interception-tools";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
-
-  services.flatpak.enable = true;
-  services.flatpak.update.auto.enable = false;
-  services.flatpak.uninstallUnmanaged = true;
-
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.ly.enableGnomeKeyring = true;
-
-  services.vnstat.enable = true;
-
-  services.postgresql.enable = true;
+  security = {
+    sudo.extraRules = [
+      {
+        users = [ "fil" ];
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/systemctl start interception-tools";
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/run/current-system/sw/bin/systemctl stop interception-tools";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+    pam.services.ly.enableGnomeKeyring = true;
+  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -208,24 +238,36 @@ in
 
   ];
 
-  programs.zsh.enable = true;
-  programs.nix-ld.enable = true;
-  programs.steam.enable = true;
-  programs.gamescope.enable = true;
-  programs.gamemode.enable = true;
-  programs.gpu-screen-recorder.enable = true;
-  programs.hyprlock.enable = true;
-  programs.tmux.enable = true;
+  programs = {
+
+    zsh.enable = true;
+    nix-ld.enable = true;
+    steam.enable = true;
+    gamescope.enable = true;
+    gamemode.enable = true;
+    gpu-screen-recorder.enable = true;
+    hyprlock.enable = true;
+    tmux.enable = true;
+
+    hyprland.enable = true;
+    hyprland.withUWSM = true;
+
+    dconf.profiles.user.databases = [
+      {
+        settings."org/gnome/desktop/interface" = {
+          gtk-theme = "Adwaita-dark";
+          icon-theme = "Mint-X-Aqua";
+          font-name = "FreeSans Regular 11";
+          document-font-name = "Noto Sans Medium 11";
+          monospace-font-name = "CodeNewRoman Nerd Font Mono 11";
+          gtk-application-prefer-dark-theme = true;
+          color-scheme = "prefer-dark";
+        };
+      }
+    ];
+  };
+
   virtualisation.podman.enable = true;
-
-  services.flatpak.packages = [
-    "org.vinegarhq.Sober"
-    "com.github.wwmm.easyeffects"
-    "io.github.Soundux"
-  ];
-
-  programs.hyprland.enable = true;
-  programs.hyprland.withUWSM = true;
   xdg.portal = {
     enable = true;
     extraPortals = [
@@ -244,20 +286,6 @@ in
     noto-fonts-cjk-sans
     dejavu_fonts
     liberation_ttf
-  ];
-
-  programs.dconf.profiles.user.databases = [
-    {
-      settings."org/gnome/desktop/interface" = {
-        gtk-theme = "Adwaita-dark";
-        icon-theme = "Mint-X-Aqua";
-        font-name = "FreeSans Regular 11";
-        document-font-name = "Noto Sans Medium 11";
-        monospace-font-name = "CodeNewRoman Nerd Font Mono 11";
-        gtk-application-prefer-dark-theme = true;
-        color-scheme = "prefer-dark";
-      };
-    }
   ];
 
   qt = {
