@@ -15,7 +15,7 @@ buildGoModule (finalAttrs: {
     owner = "kopecmaciej";
     repo = "vi-sql";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-G9MhZyB0FZ3D6zvi1agpAIZ0JwRnBUQZymeTzLo+568=";
+    hash = "sha256-CzRKumXa6Nuuec8yJ3/3xmNUGPGvr43Ih8Roq2E6DgA=";
   };
 
   vendorHash = "sha256-UpziJIG99qE3sWTm2qKVWFE8Yl0+ZLuRFiaD4+Sdygs=";

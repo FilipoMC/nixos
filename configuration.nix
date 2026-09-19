@@ -138,6 +138,7 @@ in
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    BROWSER = "zen";
   };
 
   environment.systemPackages = with pkgs; [
@@ -194,6 +195,8 @@ in
     pinta
     polychromatic
     mypkgs.crosshair
+    shotcut
+    lunar-client
 
     cliphist
     hyprsunset
@@ -215,8 +218,8 @@ in
     kitty
     yazi
     unar
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     (discord.override {
       withVencord = true;
@@ -240,7 +243,6 @@ in
   ];
 
   programs = {
-
     zsh.enable = true;
     nix-ld.enable = true;
     steam.enable = true;
@@ -266,6 +268,14 @@ in
         };
       }
     ];
+  };
+
+  xdg.mime.defaultApplications = {
+    "text/html" = "zen.desktop";
+    "x-scheme-handler/http" = "zen.desktop";
+    "x-scheme-handler/https" = "zen.desktop";
+    "x-scheme-handler/about" = "zen.desktop";
+    "x-scheme-handler/unknown" = "zen.desktop";
   };
 
   virtualisation.podman.enable = true;
